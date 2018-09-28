@@ -19,6 +19,7 @@ class App extends Component {
             }
         ],
         title: 'Components',
+        showCars: false
 
     };
     changeTitle = (newTitle) => {
@@ -26,9 +27,9 @@ class App extends Component {
             title: newTitle
         });
     };
-    handleInput = (event) => {
+    toggleCars = () => {
         this.setState({
-            title: event.target.value
+            showCars: !this.state.showCars
         });
     };
 
@@ -36,34 +37,20 @@ class App extends Component {
         // const cars = this.state.cars;
         return (
             <div className="App">
-                <input name="title" onChange={this.handleInput}/>
-                <button onClick={this.changeTitle.bind(this, 'Изменили значение')}>Нажми</button>
-                <h1>{this.state.title}</h1>
-                {this.state.cars.map((car, index) => {
-                    return (
-                        <Car
-                            key = {index}
-                            name = {car.name}
-                            year = {car.year}
-                            changeTitle = {() => this.changeTitle(car.name)}
-                        />
-                    )
-                })}
-                {/*<Car*/}
-                {/*name={cars[0].name}*/}
-                {/*year={cars[0].year}*/}
-                {/*onChangeTitle={this.changeTitle.bind(this, cars[0].name)}*/}
-                {/*/>*/}
-                {/*<Car*/}
-                {/*name={cars[1].name}*/}
-                {/*year={cars[1].year}*/}
-                {/*onChangeTitle={() => this.changeTitle(cars[1].name)}*/}
-                {/*/>*/}
-                {/*<Car*/}
-                {/*name={cars[2].name}*/}
-                {/*year={cars[2].year}*/}
-                {/*onChangeTitle={() => this.changeTitle(cars[2].name)}*/}
-                {/*/>*/}
+                <button onClick={this.toggleCars}>Toggle cars</button>
+                {this.state.showCars ?
+                    this.state.cars.map((car, index) => {
+                        return (
+                            <Car
+                                key={index}
+                                name={car.name}
+                                year={car.year}
+                                changeTitle={() => this.changeTitle(car.name)}
+                            />
+                        )
+
+                    }) : null
+                }
             </div>
         );
     }
