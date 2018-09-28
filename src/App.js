@@ -22,10 +22,19 @@ class App extends Component {
         showCars: false
 
     };
-    changeTitle = (newTitle) => {
+    changeName(name, index) {
+        const car = this.state.cars[index];
+        car.name = name;
+        const cars = this.state.cars.concat();
+        cars[index] = car;
         this.setState({
-            title: newTitle
-        });
+            cars: cars
+        })
+    };
+    deleteCar(index){
+        const cars = this.state.cars.concat();
+        cars.splice(index, 1);
+        this.setState({cars: cars});
     };
     toggleCars = () => {
         this.setState({
@@ -34,7 +43,6 @@ class App extends Component {
     };
 
     render() {
-        // const cars = this.state.cars;
         return (
             <div className="App">
                 <button onClick={this.toggleCars}>Toggle cars</button>
@@ -45,7 +53,8 @@ class App extends Component {
                                 key={index}
                                 name={car.name}
                                 year={car.year}
-                                changeTitle={() => this.changeTitle(car.name)}
+                                deleteCar = {this.deleteCar.bind(this, index)}
+                                changeName={(event) => this.changeName(event.target.value, index)}
                             />
                         )
 
